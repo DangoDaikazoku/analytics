@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
+
+<body>
+
+<div id="frameContainer"></div>
+
+
+<script type="text/javascript">
+    
+    /*********************************************************
+gets the value of a cookie
+**********************************************************/
+document.getCookie = function(sName)
+{
+    sName = sName.toLowerCase();
+    var oCrumbles = document.cookie.split(';');
+    for(var i=0; i<oCrumbles.length;i++)
+    {
+        var oPair= oCrumbles[i].split('=');
+        var sKey = decodeURIComponent(oPair[0].trim().toLowerCase());
+        var sValue = oPair.length>1?oPair[1]:'';
+        if(sKey == sName)
+            return decodeURIComponent(sValue);
+    }
+    return '';
+}
+/*********************************************************
+sets the value of a cookie
+**********************************************************/
+document.setCookie = function(sName,sValue)
+{
+    var oDate = new Date();
+    oDate.setYear(oDate.getFullYear()+1);
+    var sCookie = encodeURIComponent(sName) + '=' + encodeURIComponent(sValue) + ';expires=' + oDate.toGMTString() + ';path=/';
+    document.cookie= sCookie;
+}
+/*********************************************************
+removes the value of a cookie
+**********************************************************/
+document.clearCookie = function(sName)
+{
+    setCookie(sName,'');
+}
+    
+    
+
+
+window.onload = function(){
+
+	if (!Date.now) {
+	    Date.now = function() { return new Date().getTime(); }
+	}
+
+	document.setCookie("user", Date.now);
+
+
+	console.log(document.cookie);
+
+}
+
+</script>
+
+</body>
+</html>
