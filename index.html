@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> test input </title>
+</head>
+<script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
+
+<body>
+
+<input id="files" type="file">
+
+<div id="frameContainer"></div>
+
+
+<script type="text/javascript">
+function createIframe() {
+    var i = document.createElement("iframe");
+    i.src = "https://en.wikipedia.org/wiki/Mahamrityunjaya_Mantra";
+    i.scrolling = "auto";
+    i.frameborder = "0";
+    i.width = "90%";
+    i.height = "220px";
+    document.getElementById("frameContainer").appendChild(i);
+};
+
+// Check for browser support of event handling capability
+if (window.addEventListener) window.addEventListener("load", createIframe, false);
+else if (window.attachEvent) window.attachEvent("onload", createIframe);
+else window.onload = createIframe;
+</script>
+
+</body>
+</html>
