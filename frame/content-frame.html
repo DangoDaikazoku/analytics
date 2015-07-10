@@ -6,9 +6,6 @@
 
 <body>
 
-<div id="frameContainer"></div>
-
-
 <script type="text/javascript">
     
     /*********************************************************
@@ -16,7 +13,6 @@ gets the value of a cookie
 **********************************************************/
 document.getCookie = function(sName)
 {
-    sName = sName.toLowerCase();
     var oCrumbles = document.cookie.split(';');
     for(var i=0; i<oCrumbles.length;i++)
     {
@@ -64,14 +60,18 @@ window.onload = function(){
 	    Date.now = function() { return new Date().getTime(); }
 	}
 
-    var usr = document.getCookie("user");
+    var usr = document.getCookie("ANuser");
     if(typeof usr === "undefined" || usr == ""){
        usr = Date.now();
-	   document.setCookie("user", usr);
+	   document.setCookie("ANuser", "a_"+usr);
     }
 
-	alert(usr);
+	console.log(usr);
+    var parentUrl = (window.location != window.parent.location)
+            ? document.referrer
+            : document.location;
 
+    window.parent.postMessage(usr, parentUrl);
 }
 
 </script>

@@ -5,19 +5,17 @@
 </head>
 
 <body style="overflow:hidden">
-<iframe src="http://www.desimartini.com/" style="width:100%; height:100%; position:absolute; left:0px; top:0px; "></iframe>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YJpQmRipK0o?start=30" frameborder="0" allowfullscreen></iframe>
 <script type="text/javascript">
     
-
     var frameDiv = document.createElement("div");
     frameDiv.id = "frameContainer";
 
     document.body.appendChild(frameDiv); 
 
-
     function createIframe() {
-        var i = document.createElement("iframe");
+        i = document.createElement("iframe");
         i.src = "http://localhost:8005/frame/content-frame.html";
         i.scrolling = "auto";
         i.frameborder = "0";
@@ -32,17 +30,22 @@
     else window.onload = createIframe;
 
 
+    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+    var eventer = window[eventMethod];
+    var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
-    var deleteAllCookies = function() {
-        var cookies = document.cookie.split(";");
+    eventer(messageEvent,function(e) {
+        var key = e.message ? "message" : "data";
+        var data = e[key];
 
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            var eqPos = cookie.indexOf("=");
-            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        if(e.origin == "http://localhost:8005"){
+            console.log(e, key, data);
+            if(typeof data !== "undefined" && data != ""){
+                document.cookie = "ANuser=" + data;
+            }
         }
-    }
+
+    },false);
 
 </script>
 
