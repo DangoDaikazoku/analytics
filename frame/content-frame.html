@@ -43,10 +43,19 @@ removes the value of a cookie
 **********************************************************/
 document.clearCookie = function(sName)
 {
-    setCookie(sName,'');
+    document.setCookie(sName,'');
 }
     
-    
+var deleteAllCookies = function() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
 
 
 window.onload = function(){
@@ -55,10 +64,13 @@ window.onload = function(){
 	    Date.now = function() { return new Date().getTime(); }
 	}
 
-	document.setCookie("user", Date.now);
+    var usr = document.getCookie("user");
+    if(typeof usr === "undefined" || usr == ""){
+       usr = Date.now();
+	   document.setCookie("user", usr);
+    }
 
-
-	console.log(document.cookie);
+	alert(usr);
 
 }
 

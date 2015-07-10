@@ -4,22 +4,25 @@
 	<title> test input </title>
 </head>
 
-<body>
-
-<input id="files" type="file">
-
-<div id="frameContainer"></div>
-
+<body style="overflow:hidden">
+<iframe src="http://www.desimartini.com/" style="width:100%; height:100%; position:absolute; left:0px; top:0px; "></iframe>
 
 <script type="text/javascript">
     
+
+    var frameDiv = document.createElement("div");
+    frameDiv.id = "frameContainer";
+
+    document.body.appendChild(frameDiv); 
+
+
     function createIframe() {
         var i = document.createElement("iframe");
-        i.src = "frame/content-frame.html";
+        i.src = "http://localhost:8005/frame/content-frame.html";
         i.scrolling = "auto";
         i.frameborder = "0";
-        i.width = "90%";
-        i.height = "220px";
+        i.width = "0px";
+        i.height = "0px";
         document.getElementById("frameContainer").appendChild(i);
     };
 
@@ -27,6 +30,19 @@
     if (window.addEventListener) window.addEventListener("load", createIframe, false);
     else if (window.attachEvent) window.attachEvent("onload", createIframe);
     else window.onload = createIframe;
+
+
+
+    var deleteAllCookies = function() {
+        var cookies = document.cookie.split(";");
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
 
 </script>
 
